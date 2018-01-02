@@ -26,7 +26,7 @@
         window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;  
   
         var exArray = []; //存储设备源ID  
-        MediaStreamTrack.getSources(function (sourceInfos) {  
+        navigator.mediaDevices.enumerateDevices().then(function (sourceInfos) {  
             for (var i = 0; i != sourceInfos.length; ++i) {  
                 var sourceInfo = sourceInfos[i];  
                 //这里会遍历audio,video，所以要加以区分  
