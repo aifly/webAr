@@ -75,10 +75,25 @@ function trace(arg) {
 var errorElement = document.querySelector('#errorMsg');
 var video = document.querySelector('video');
 
+var sourceArr = [];
+
+if(navigator.getUserMedia){
+	MediaStreamTrack.getSources(function(sources){
+		sources.forEach(function(source){
+			sourceArr.push(source);
+		})
+	})
+}
+
 // Put variables in global scope to make them available to the browser console.
 var constraints = window.constraints = {
   audio: false,
-  video: true
+  video: true,
+  optional:[
+  	{
+  		sourceId:sourceArr[1]
+  	}
+  ]
 };
 
 function handleSuccess(stream) {
