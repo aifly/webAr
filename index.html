@@ -78,12 +78,19 @@ var video = document.querySelector('video');
 var sourceArr = [];
 
 if(navigator.getUserMedia){
-	MediaStreamTrack.getSources(function(sources){
-		sources.forEach(function(source){
-			sourceArr.push(source);
-		})
-	})
+	navigator.mediaDevices.enumerateDevices().then(function (sourceInfos) {  
+      for (var i = 0; i != sourceInfos.length; ++i) {  
+          var sourceInfo = sourceInfos[i];  
+          //这里会遍历audio,video，所以要加以区分  
+          if (sourceInfo.kind === 'video') {  
+              sourceArr.push(sourceInfo.id);  
+          }  
+      }  
+  });  
+  
 }
+
+alert(sourceArr.length)
 
 // Put variables in global scope to make them available to the browser console.
 var constraints = window.constraints = {
