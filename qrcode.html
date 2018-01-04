@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>二维码生成器</title>
+	<meta charset="utf-8"/>
+	<style>
+		
+		html,body,div{
+			margin: 0;padding: 0;
+		}
+		#zmiti-box{
+			width: 1000px;
+			height: 500px;
+			margin: 10vh auto;
+
+		}
+
+		.zmiti-btn{
+			width: 100px;
+			height: 40px;
+			background: #4caf50;
+			color:#fff;
+			text-align: center;
+			line-height: 40px;
+			border-radius: 4px;
+			float: left;
+			cursor: pointer;
+			margin: 130px 20px 0 20px;
+		}
+		#zmiti-url{
+			width: 540px;
+			height: 300px;
+			border:1px solid #ccc;
+			resize:none;
+			outline: none;
+			float: left;
+		}
+		.zmiti-qrcode-box{
+			width: 300px;
+			height: 300px;
+			border:1px solid #ccc;
+			float: left;
+		}
+		img{
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="zmiti-box">
+		<textarea id="zmiti-url"></textarea>
+		<div class="zmiti-btn">生成二维码</div>
+		<div class="zmiti-qrcode-box">
+			
+		</div>
+	</div>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$(function(){
+
+			$('.zmiti-btn').on('click',function(){
+				var url = $('#zmiti-url').val();
+				if(url.length <= 0){
+					alert('请输入要生成的内容')
+					return;
+				}
+				$.ajax({
+					url:'http://api.zmiti.com/v2/share/create_qrcode',
+					type:'post',
+					data:{
+						url:url,
+						size:25
+					},
+					success:function(data){
+						if(data.getret === 0){
+							var img = new Image();
+							img.src = data.qrcodeurl;
+							$('.zmiti-qrcode-box').html(img);
+						}
+					}
+				})
+			})
+		})
+	</script>
+</body>
+</html>
