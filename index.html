@@ -26,14 +26,12 @@
   </script>
   <title>拉取后置摄像头</title>
 
-  <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
   
   <style>
     *{margin:0;padding:0}
     
     video{
       position:absolute;
-      background: #f00;
     }
     body,html{
       width: 100%;
@@ -44,7 +42,6 @@
     .zmiti-box{
       position: absolute;
       z-index: 10;
-      background: red;
       color:#fff;
       left: 40%;
       top: 50%;
@@ -83,8 +80,8 @@
 
     <div id="errorMsg"></div>
 
-    <div class="zmiti-box">canvas1021%</div>
-  <script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
+<script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
+<script src='./js/ar.js'></script>
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script>
    !function(){
@@ -124,20 +121,12 @@
             geometry.vertices.push(vertex);
         }
 
-        var params = [
-            [[1,1,.5],5],
-            [[.95,1,.5],4],
-            [[.9,1,.5],3],
-            [[.85,1,.5],2],
-            [[.8,1,.5],1],
-        ];
-
         var materails = [];
         geometry.vertices.forEach(function(param,i){
-                var size = Math.random()*2;
+                var size = Math.random()*2+.7;
                 var particles = new THREE.Points(geometry,new THREE.PointsMaterial({size:size,map:sprite,transparent:true}));
                 particles.speedY = (Math.random()+.1);
-                particles.speedX = (Math.random()+.1);
+                particles.speedX = (Math.random())*(Math.random()-.5>0?1:-1);
                 particles.speedY = particles.speedY.toFixed(2)
                 particles.speedX = particles.speedX.toFixed(2)
                 scene.add( particles );
@@ -148,9 +137,7 @@
 
         document.body.appendChild(renderer.domElement);
 
-
-        var render = ()=>{
-
+        var render = function(){
 
             camera.position.x += (  camera.position.x ) * 0.05;
             camera.position.y += (  - camera.position.y ) * 0.05;
