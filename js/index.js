@@ -4,6 +4,14 @@ var zmitiUtil = {
         this.initWebgl();
         this.initWebRTC();
     },
+    initEarth: function() {
+        var earth = new THREE.Mesh(new THREE.SphereGeometry(20, 30, 30), new THREE.MeshBasicMaterial({
+            map: new THREE.TextureLoader().load('./assets/images/earth.jpg')
+        }));
+
+        return earth;
+
+    },
     initWebgl: function() {
         var viewW = document.documentElement.clientWidth,
             viewH = document.documentElement.clientHeight;
@@ -45,7 +53,7 @@ var zmitiUtil = {
         var pointColor = "#ffffff";
         var directionalLight = new THREE.DirectionalLight(pointColor);
         directionalLight.position.set(-40, 60, -10);
-        directionalLight.castShadow = true;
+        /*directionalLight.castShadow = true;
         directionalLight.shadowCameraNear = 2;
         directionalLight.shadowCameraFar = 200;
         directionalLight.shadowCameraLeft = -50;
@@ -57,9 +65,14 @@ var zmitiUtil = {
         directionalLight.intensity = 0.5;
         directionalLight.shadowMapHeight = 1024;
         directionalLight.shadowMapWidth = 1024;
-
+*/
 
         scene.add(directionalLight);
+
+        var earth = this.initEarth();
+        scene.add(earth);
+        console.log(earth.geometry.parameters.radius)
+
 
 
         var manager = new THREE.LoadingManager();
@@ -130,8 +143,11 @@ var zmitiUtil = {
 
             trackballControls.update(clock.getDelta());
             object && (object.rotation.y += .01);
-            pointLight.position.x = Math.sin(i * Math.PI / 180) * 300;
-            pointLight.position.z = Math.cos(i * Math.PI / 180) * 300;
+            // pointLight.position.x = Math.sin(i * Math.PI / 180) * 300;
+            //pointLight.position.z = Math.cos(i * Math.PI / 180) * 300;
+            earth.rotation.x += .001;
+            earth.rotation.y += .01;
+
             // pointLight.position.y = Math.cos(i*Math.PI/180)*300;
             i += .2;
             scene.children.forEach(function(child, i) {
@@ -153,6 +169,12 @@ var zmitiUtil = {
 
 
         render();
+    },
+
+    isAndroid: function() {
+        var isAndroid = false;
+        isAndroid = (/(Android)/i.test(navigator.userAgent));
+        return isAndroid;
     },
     initWebRTC: function() {
         ///var errorElement = document.querySelector('#errorMsg');
@@ -182,7 +204,6 @@ var zmitiUtil = {
                 }
 
                 function handleError(error) {
-                    alert('error');
                     /* if (error.name === 'ConstraintNotSatisfiedError') {
                          errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
                              constraints.video.width.exact + ' px is not supported by your device.');
