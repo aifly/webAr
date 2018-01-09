@@ -12,7 +12,7 @@
   <script>
     document.addEventListener('touchmove',function(e){e.preventDefault()},{ passive: false })
   </script>
-  <title>飘雪webAR</title>
+  <title>飘雪webAR1</title>
   <style>
     *{margin:0;padding:0}
     
@@ -23,7 +23,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #f00;
+      background: #000;
     }
 
     .zmiti-box{
@@ -81,12 +81,14 @@
     script.src = src+'?aa='+new Date().getTime();
     document.body.appendChild(script);
   }
-/*  loadScript('./assets/js/index.js')
+
+  loadScript('./js/index.js')
+/*  
   loadScript('./assets/js/vendor.js')*/
 </script>
-
+<!-- 
 <script src='./assets/js/vendor.js'></script>
-<script src='./assets/js/index.js'></script>
+<script src='./assets/js/index.js'></script> -->
 
 <!-- <script src='http://localhost:4013/index.js' onerror="
 "></script> -->

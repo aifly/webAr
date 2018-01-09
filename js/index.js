@@ -74,7 +74,7 @@ var zmitiUtil = {
         var loader = new THREE.OBJLoader(manager);
 
         var object = null;
-        loader.load('./assets/data/male02.obj', function(obj) {
+        loader.load('./assets/data/female02.obj', function(obj) {
             obj.traverse(function(child) {
                 /*if ( child instanceof THREE.Mesh ) {
                   child.material.map = texture;
@@ -125,13 +125,14 @@ var zmitiUtil = {
 
         document.body.appendChild(renderer.domElement);
         var i = 0;
+        var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame
         var render = function() {
 
             //camera.position.x += (  camera.position.x ) * 0.05;
             //camera.position.y += (  - camera.position.y ) * 0.05;
             //camera.lookAt( scene.position );
 
-            trackballControls.update(clock.getDelta());
+            //trackballControls.update(clock.getDelta());
             object && (object.rotation.y += .01);
             pointLight.position.x = Math.sin(i * Math.PI / 180) * 300;
             pointLight.position.z = Math.cos(i * Math.PI / 180) * 300;
@@ -158,7 +159,7 @@ var zmitiUtil = {
         render();
     },
 
-    isAndroid() {
+    isAndroid: function() {
         var isAndroid = false;
         if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {} else if (/(Android)/ig.test(navigator.userAgent)) {
             //alert(navigator.userAgent); 
@@ -178,13 +179,6 @@ var zmitiUtil = {
                 var param = {
                     facingMode: 'environment'
                 };
-                if (s.isAndroid()) {
-                    param = {
-                        facingMode: 'environment',
-                        width,
-                        height
-                    }
-                }
                 var constraints = window.constraints = {
                     audio: false,
                     video: param
