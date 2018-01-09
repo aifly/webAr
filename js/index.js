@@ -179,6 +179,8 @@ var zmitiUtil = {
                     window.stream = stream; // make variable available to browser console
                     video.srcObject = stream;
 
+                    alert('success')
+
                 }
 
                 function handleError(error) {
