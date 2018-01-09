@@ -1,7 +1,7 @@
 var zmitiUtil = {
 
     init: function() {
-        this.initWebgl();
+      //  this.initWebgl();
         this.initWebRTC();
     },
     initWebgl: function() {
