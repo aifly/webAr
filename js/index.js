@@ -1,13 +1,12 @@
 var zmitiUtil = {
 
     init: function() {
+        this.initWebgl();
+        this.initWebRTC();
+    },
+    initWebgl: function() {
         var viewW = document.documentElement.clientWidth,
             viewH = document.documentElement.clientHeight;
-        this.initWebgl(viewW, viewH);
-        this.initWebRTC(viewW, viewH);
-    },
-    initWebgl: function(viewW, viewH) {
-
 
 
         var scene = new THREE.Scene();
@@ -17,8 +16,6 @@ var zmitiUtil = {
             alpha: true,
             antialias: true
         });
-
-        renderer.setPixelRatio(window.devicePixelRatio);
 
         renderer.setSize(viewW, viewH);
         renderer.setClearAlpha(0);
@@ -74,14 +71,14 @@ var zmitiUtil = {
         var loader = new THREE.OBJLoader(manager);
 
         var object = null;
-        loader.load('./assets/data/female02.obj', function(obj) {
+        loader.load('./assets/data/snowman.obj', function(obj) {
             obj.traverse(function(child) {
                 /*if ( child instanceof THREE.Mesh ) {
                   child.material.map = texture;
                 }*/
             });
-            obj.position.y = -36;
-            obj.scale.set(.4, .4, .4)
+            obj.position.y = -60;
+            obj.scale.set(.5, .5, .5)
             object = obj;
             scene.add(obj);
         });
@@ -125,14 +122,13 @@ var zmitiUtil = {
 
         document.body.appendChild(renderer.domElement);
         var i = 0;
-        var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame
         var render = function() {
 
             //camera.position.x += (  camera.position.x ) * 0.05;
             //camera.position.y += (  - camera.position.y ) * 0.05;
             //camera.lookAt( scene.position );
 
-            //trackballControls.update(clock.getDelta());
+            trackballControls.update(clock.getDelta());
             object && (object.rotation.y += .01);
             pointLight.position.x = Math.sin(i * Math.PI / 180) * 300;
             pointLight.position.z = Math.cos(i * Math.PI / 180) * 300;
@@ -158,30 +154,19 @@ var zmitiUtil = {
 
         render();
     },
-
-    isAndroid: function() {
-        var isAndroid = false;
-        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {} else if (/(Android)/ig.test(navigator.userAgent)) {
-            //alert(navigator.userAgent); 
-            isAndroid = true;
-        }
-
-        return isAndroid;
-    },
-
-    initWebRTC: function(width, height) {
+    initWebRTC: function() {
         ///var errorElement = document.querySelector('#errorMsg');
         var video = document.querySelector('video');
-        var s = this;
+
         if (navigator.getUserMedia) {
             navigator.mediaDevices.enumerateDevices().then(function(sourceInfos) {
 
-                var param = {
-                    facingMode: 'environment'
-                };
+
                 var constraints = window.constraints = {
                     audio: false,
-                    video: param
+                    video: {
+                        facingMode: 'environment'
+                    }
                 };
 
                 function handleSuccess(stream) {
@@ -193,9 +178,11 @@ var zmitiUtil = {
                     };
                     window.stream = stream; // make variable available to browser console
                     video.srcObject = stream;
+
                 }
 
                 function handleError(error) {
+                    alert('error');
                     /* if (error.name === 'ConstraintNotSatisfiedError') {
                          errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
                              constraints.video.width.exact + ' px is not supported by your device.');
