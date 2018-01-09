@@ -1,7 +1,7 @@
 var zmitiUtil = {
 
     init: function() {
-      //  this.initWebgl();
+        this.initWebgl();
         this.initWebRTC();
     },
     initWebgl: function() {
@@ -154,6 +154,12 @@ var zmitiUtil = {
 
         render();
     },
+
+    isAndroid: function() {
+        var isAndroid = false;
+        isAndroid = (/(Android)/i.test(navigator.userAgent));
+        return isAndroid;
+    },
     initWebRTC: function() {
         ///var errorElement = document.querySelector('#errorMsg');
         var video = document.querySelector('video');
@@ -179,12 +185,9 @@ var zmitiUtil = {
                     window.stream = stream; // make variable available to browser console
                     video.srcObject = stream;
 
-                    alert('success')
-
                 }
 
                 function handleError(error) {
-                    alert('error');
                     /* if (error.name === 'ConstraintNotSatisfiedError') {
                          errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
                              constraints.video.width.exact + ' px is not supported by your device.');
