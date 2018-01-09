@@ -1,12 +1,13 @@
 var zmitiUtil = {
 
     init: function() {
-        this.initWebgl();
-        this.initWebRTC();
-    },
-    initWebgl: function() {
         var viewW = document.documentElement.clientWidth,
             viewH = document.documentElement.clientHeight;
+        this.initWebgl(viewW, viewH);
+        this.initWebRTC(viewW, viewH);
+    },
+    initWebgl: function(viewW, viewH) {
+
 
 
         var scene = new THREE.Scene();
@@ -16,6 +17,8 @@ var zmitiUtil = {
             alpha: true,
             antialias: true
         });
+
+        renderer.setPixelRatio(window.devicePixelRatio);
 
         renderer.setSize(viewW, viewH);
         renderer.setClearAlpha(0);
@@ -30,7 +33,7 @@ var zmitiUtil = {
 
         var geometry = new THREE.Geometry();
 
-        var sprite = new THREE.TextureLoader().load("./images/disc.png");
+        var sprite = new THREE.TextureLoader().load("./assets/images/disc.png");
 
         for (var i = 0; i < 40; i++) {
             var vertex = new THREE.Vector3();
@@ -71,14 +74,14 @@ var zmitiUtil = {
         var loader = new THREE.OBJLoader(manager);
 
         var object = null;
-        loader.load('./data/male02.obj', function(obj) {
+        loader.load('./assets/data/male02.obj', function(obj) {
             obj.traverse(function(child) {
                 /*if ( child instanceof THREE.Mesh ) {
                   child.material.map = texture;
                 }*/
             });
-            obj.position.y = -60;
-            obj.scale.set(.5, .5, .5)
+            obj.position.y = -36;
+            obj.scale.set(.4, .4, .4)
             object = obj;
             scene.add(obj);
         });
@@ -154,19 +157,37 @@ var zmitiUtil = {
 
         render();
     },
-    initWebRTC: function() {
+
+    isAndroid() {
+        var isAndroid = false;
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {} else if (/(Android)/ig.test(navigator.userAgent)) {
+            //alert(navigator.userAgent); 
+            isAndroid = true;
+        }
+
+        return isAndroid;
+    },
+
+    initWebRTC: function(width, height) {
         ///var errorElement = document.querySelector('#errorMsg');
         var video = document.querySelector('video');
-
+        var s = this;
         if (navigator.getUserMedia) {
             navigator.mediaDevices.enumerateDevices().then(function(sourceInfos) {
 
-
+                var param = {
+                    facingMode: 'environment'
+                };
+                if (s.isAndroid()) {
+                    param = {
+                        facingMode: 'environment',
+                        width,
+                        height
+                    }
+                }
                 var constraints = window.constraints = {
                     audio: false,
-                    video: {
-                        facingMode: 'environment'
-                    }
+                    video: param
                 };
 
                 function handleSuccess(stream) {

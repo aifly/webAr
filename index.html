@@ -1,31 +1,18 @@
 
 <!DOCTYPE html>
-<!--
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
- *
- *  Use of this source code is governed by a BSD-style license
- *  that can be found in the LICENSE file in the root of the source
- *  tree.
--->
 <html>
 <head>
-
   <meta charset="utf-8">
   <meta name="description" content="WebRTC code samples">
   <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
   <meta itemprop="description" content="Client-side WebRTC code samples">
-  <meta itemprop="image" content="../../../images/webrtc-icon-192x192.png">
   <meta itemprop="name" content="WebRTC code samples">
   <meta name="mobile-web-app-capable" content="yes">
-
   <base target="_blank">
-  
   <script>
-    document.addEventListener('touchmove',function(e){e.preventDefault()})
+    document.addEventListener('touchmove',function(e){e.preventDefault()},{ passive: false })
   </script>
   <title>飘雪webAR</title>
-
-  
   <style>
     *{margin:0;padding:0}
     
@@ -36,7 +23,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #000;
+      background: #f00;
     }
 
     .zmiti-box{
@@ -73,18 +60,36 @@
 
 <body>
 
-     <div class="zmiti-video-box">
-        <video id="gum-local" autoplay playsinline></video>
-     </div>
-
-
-    <div id="errorMsg"></div>
+   <div class="zmiti-video-box">
+      <video id="gum-local" autoplay playsinline></video>
+   </div>
 
 <script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
 <script src='./js/OBJLoader.js'></script>
 <script src='./js/TrackballControls.js'></script>
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-<script src='./js/index.js'></script>
+
+
+
+
+
+
+
+<script>
+  function loadScript(src){
+    var script  = document.createElement('script');
+    script.src = src+'?aa='+new Date().getTime();
+    document.body.appendChild(script);
+  }
+/*  loadScript('./assets/js/index.js')
+  loadScript('./assets/js/vendor.js')*/
+</script>
+
+<script src='./assets/js/vendor.js'></script>
+<script src='./assets/js/index.js'></script>
+
+<!-- <script src='http://localhost:4013/index.js' onerror="
+"></script> -->
 
 </body>
 </html>
