@@ -79,10 +79,8 @@
         var video = document.querySelector('video');
 
         if (navigator.getUserMedia) {
-          alert('10')
             navigator.mediaDevices.enumerateDevices().then(function(sourceInfos) {
-
-        alert(sourceInfos.length);
+ 
                 var constraints = window.constraints = {
                     audio: false,
                     video: {
@@ -91,6 +89,7 @@
                 };
 
                 function handleSuccess(stream) {
+                  alert('success');
                     var videoTracks = stream.getVideoTracks();
                     //console.log('Got stream with constraints:', constraints);
                     //console.log('Using video device: ' + videoTracks[0].label);
@@ -99,11 +98,12 @@
                     };
                     window.stream = stream; // make variable available to browser console
                     video.srcObject = stream;
-                    alert('success');
+                    
 
                 }
 
                 function handleError(error) {
+                   alert('error');
                     /* if (error.name === 'ConstraintNotSatisfiedError') {
                          errorMsg('The resolution ' + constraints.video.width.exact + 'x' +
                              constraints.video.width.exact + ' px is not supported by your device.');
