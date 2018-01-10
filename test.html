@@ -77,9 +77,7 @@
         ///var errorElement = document.querySelector('#errorMsg');
         var video = document.querySelector('video');
         navigator.getUserMedia({ 
-                       video: {
-                          facingMode: 'environment'
-                      }
+                       video: true
                      }, function(){
                       alert('成功')
                     },function(){
