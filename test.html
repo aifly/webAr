@@ -12,7 +12,7 @@
   <script>
     document.addEventListener('touchmove',function(e){e.preventDefault()},{ passive: false })
   </script>
-  <title>飘雪webAR</title>
+  <title>飘雪webAR1</title>
   <style>
     *{margin:0;padding:0}
     
@@ -77,12 +77,12 @@
     initWebRTC: function() {
         ///var errorElement = document.querySelector('#errorMsg');
         var video = document.querySelector('video');
-        navigator.getUserMedia({ 
+        navigator.webkitGetUserMedia({ 
                        video: true
                      }, function(){
-                      alert('成功了~~')
+                      alert('成功了~~webkitGetUserMedia')
                     },function(){
-                      alert('失败了~~')
+                      alert('失败了~~webkitGetUserMedia')
                     }); 
       
       return ;
